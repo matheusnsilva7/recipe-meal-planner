@@ -1,0 +1,124 @@
+### Get all users
+GET http://localhost:3000/users
+Accept: application/json
+
+### Create a user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstName": "Mark",
+  "lastName": "McDonald",
+  "email": "mark@example.com",
+  "username": "markm",
+  "locale": "en-US"
+}
+
+### Get user by ID
+GET http://localhost:3000/users/6979a06a28e8873d99561458
+Accept: application/json
+
+### Update user by ID
+PUT http://localhost:3000/users/6979a06a28e8873d99561458
+Content-Type: application/json
+
+{
+  "username": "markm_updated"
+}
+
+### Delete user by ID
+DELETE http://localhost:3000/users/6979a06a28e8873d99561458
+Accept: application/json
+
+### Get all recipes
+GET http://localhost:3000/recipes
+Accept: application/json
+
+### Create a recipe
+POST http://localhost:3000/recipes
+Content-Type: application/json
+
+{
+  "userId": "6979a06a28e8873d99561458",
+  "title": "Tacos",
+  "description": "A simple taco recipe",
+  "ingredients": ["tortilla", "beef", "cheese"],
+  "steps": ["Cook beef", "Warm tortilla", "Assemble tacos"],
+  "tagsId": ["Mexican", "Dinner"]
+}
+
+### Get recipe by ID
+GET http://localhost:3000/recipes/6979a4221c9074f0908da0bd
+Accept: application/json
+
+### Update recipe by ID
+PUT http://localhost:3000/recipes/6979a4221c9074f0908da0bd
+Content-Type: application/json
+
+{
+  "description": "Updated recipe description"
+}
+
+### Delete recipe by ID
+DELETE http://localhost:3000/recipes/6979a4221c9074f0908da0bd
+Accept: application/json
+
+### Get All
+GET http://localhost:3000/tags
+Accept: application/json
+
+### Create Tag
+POST http://localhost:3000/tags
+Content-Type: application/json
+
+{
+  "name": "Meal Prep 2",
+  "description": "Meals prepared in advance"
+}
+
+### Get by ID
+GET http://localhost:3000/tags/698a8aaa1e1de2a1371c560c
+Accept: application/json
+
+### Update tag by ID
+PUT http://localhost:3000/tags/698a8aaa1e1de2a1371c560c
+Content-Type: application/json
+
+{
+  "description": "Updated tag description 2"
+}
+
+### Delete tag by ID
+DELETE http://localhost:3000/tags/698a8aaa1e1de2a1371c560c
+Accept: application/json
+
+### Get all meal plans
+GET http://localhost:3000/mealplans
+Accept: application/json
+
+### Create a meal plans
+POST http://localhost:3000/mealplans
+Content-Type: application/json
+
+{
+  "userId": "6987c0457077c12fdaa83211",
+  "recipeId": "6987c1597077c12fdaa8321d",
+  "mealType": "breakfast",
+  "notes": "Meal Plan Name",
+}
+
+### Get meal plan by ID
+GET http://localhost:3000/mealplans/698a8d82fc2336af78d83a36
+Accept: application/json
+
+### Update meal plan by ID
+PUT http://localhost:3000/mealplans/698a8d82fc2336af78d83a36
+Content-Type: application/json
+
+{
+  "notes": "Updated Meal Plan Name",
+}
+
+### Delete meal plan by ID
+DELETE http://localhost:3000/mealplans/698a8d82fc2336af78d83a36
+Accept: application/json
