@@ -5,7 +5,7 @@
     "description": "Task Api",
     "version": "1.0.0"
   },
-  "host": "https://recipe-meal-planner-4b9h.onrender.com/",
+  "host": "https://recipe-meal-planner-4b9h.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
