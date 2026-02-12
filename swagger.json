@@ -5,11 +5,10 @@
     "description": "Task Api",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "https://recipe-meal-planner-4b9h.onrender.com/",
   "basePath": "/",
   "schemes": [
-    "https",
-    "http"
+    "https"
   ],
   "paths": {
     "/users/": {
