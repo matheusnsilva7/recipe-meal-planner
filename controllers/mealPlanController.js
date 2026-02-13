@@ -31,7 +31,7 @@ const getMealPlanById = async (req, res) => {
     const mealPlan = await MealPlan.findById(req.params.id)
       .populate({
         path: "userId",
-        select: "firstName lastName email username locale -_id",
+        select: "firstName lastName email username locale _id",
       })
       .populate({
         path: "recipeId",
@@ -42,7 +42,7 @@ const getMealPlanById = async (req, res) => {
       return res.status(404).json({ message: "MealPlan not found" });
     }
 
-    if (mealPlan.userId.toString() !== req.user) {
+    if (mealPlan.userId._id.toString() !== req.session.user._id) {
       return res.status(403).json({ message: "Not allowed" });
     }
 
@@ -61,7 +61,7 @@ const createMealPlan = async (req, res) => {
     const { recipeId, date, mealType, notes } = req.body;
 
     const mealPlan = new MealPlan({
-      userId: req.user.id,
+      userId: req.session.user._id,
       recipeId,
       date,
       mealType,
@@ -85,7 +85,7 @@ const updateMealPlan = async (req, res) => {
     if (!mealPlan)
       return res.status(404).json({ message: "MealPlan not found" });
 
-    if (mealPlan.userId.toString() !== req.user.id) {
+    if (mealPlan.userId._id.toString() !== req.session.user._id) {
       return res.status(403).json({ message: "Not allowed" });
     }
 
@@ -119,7 +119,7 @@ const deleteMealPlan = async (req, res) => {
     if (!mealPlan)
       return res.status(404).json({ message: "MealPlan not found" });
 
-    if (mealPlan.userId.toString() !== req.user.id) {
+    if (mealPlan.userId._id.toString() !== req.session.user._id) {
       return res.status(403).json({ message: "Not allowed" });
     }
 
