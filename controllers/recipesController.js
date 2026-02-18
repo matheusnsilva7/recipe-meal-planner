@@ -51,17 +51,8 @@ const createRecipe = async (req, res) => {
 const updateRecipe = async (req, res) => {
   //#swagger.tags=["Recipes"]
   try {
-    if (!req.user)
-      return res.status(401).json({ message: "You must be logged in" });
-
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
-
-    if (recipe.userId.toString() !== req.user.id) {
-      return res
-        .status(403)
-        .json({ message: "Not allowed to update this recipe" });
-    }
 
     const { title, description, ingredients, steps, tagsId } = req.body;
 
@@ -86,9 +77,6 @@ const updateRecipe = async (req, res) => {
 const deleteRecipe = async (req, res) => {
   //#swagger.tags=["Recipes"]
   try {
-    if (!req.user)
-      return res.status(401).json({ message: "You must be logged in" });
-
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
 
