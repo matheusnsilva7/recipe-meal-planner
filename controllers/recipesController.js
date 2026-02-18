@@ -80,12 +80,6 @@ const deleteRecipe = async (req, res) => {
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
 
-    if (recipe.userId.toString() !== req.user.id) {
-      return res
-        .status(403)
-        .json({ message: "Not allowed to delete this recipe" });
-    }
-
     await Recipe.findByIdAndDelete(req.params.id);
     res.json({ message: "Recipe deleted successfully" });
   } catch (err) {
