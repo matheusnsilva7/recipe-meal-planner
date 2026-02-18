@@ -3,9 +3,6 @@ const MealPlan = require("../models/MealPlan");
 const getAllMealPlans = async (req, res) => {
   //#swagger.tags=["Meal Plans"]
   try {
-    if (!req.session.user)
-      return res.status(401).json({ message: "You must be logged in" });
-
     const mealPlans = await MealPlan.find()
       .populate({
         path: "userId",
@@ -16,7 +13,7 @@ const getAllMealPlans = async (req, res) => {
         select: "title description -_id",
       });
 
-    res.json(mealPlans);
+    res.status(200).json(mealPlans);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -25,9 +22,6 @@ const getAllMealPlans = async (req, res) => {
 const getMealPlanById = async (req, res) => {
   //#swagger.tags=["Meal Plans"]
   try {
-    if (!req.session.user)
-      return res.status(401).json({ message: "You must be logged in" });
-
     const mealPlan = await MealPlan.findById(req.params.id)
       .populate({
         path: "userId",
@@ -42,11 +36,7 @@ const getMealPlanById = async (req, res) => {
       return res.status(404).json({ message: "MealPlan not found" });
     }
 
-    if (mealPlan.userId._id.toString() !== req.session.user._id) {
-      return res.status(403).json({ message: "Not allowed" });
-    }
-
-    res.json(mealPlan);
+    res.status(200).json(mealPlan);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -55,9 +45,6 @@ const getMealPlanById = async (req, res) => {
 const createMealPlan = async (req, res) => {
   //#swagger.tags=["Meal Plans"]
   try {
-    if (!req.session.user)
-      return res.status(401).json({ message: "You must be logged in" });
-
     const { recipeId, date, mealType, notes } = req.body;
 
     const mealPlan = new MealPlan({
@@ -78,9 +65,6 @@ const createMealPlan = async (req, res) => {
 const updateMealPlan = async (req, res) => {
   //#swagger.tags=["Meal Plans"]
   try {
-    if (!req.session.user)
-      return res.status(401).json({ message: "You must be logged in" });
-
     const mealPlan = await MealPlan.findById(req.params.id);
     if (!mealPlan)
       return res.status(404).json({ message: "MealPlan not found" });
@@ -112,9 +96,6 @@ const updateMealPlan = async (req, res) => {
 const deleteMealPlan = async (req, res) => {
   //#swagger.tags=["Meal Plans"]
   try {
-    if (!req.session.user)
-      return res.status(401).json({ message: "You must be logged in" });
-
     const mealPlan = await MealPlan.findById(req.params.id);
     if (!mealPlan)
       return res.status(404).json({ message: "MealPlan not found" });

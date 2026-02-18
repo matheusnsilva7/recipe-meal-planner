@@ -4,7 +4,7 @@ const getAllRecipes = async (req, res) => {
   //#swagger.tags=["Recipes"]
   try {
     const recipes = await Recipe.find();
-    res.json(recipes);
+    res.status(200).json(recipes);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -21,7 +21,7 @@ const getRecipeById = async (req, res) => {
       .populate({ path: "tagsId", select: "name description -_id" });
 
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
-    res.json(recipe);
+    res.status(200).json(recipe);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -30,18 +30,15 @@ const getRecipeById = async (req, res) => {
 const createRecipe = async (req, res) => {
   //#swagger.tags=["Recipes"]
   try {
-    if (!req.user)
-      return res.status(401).json({ message: "You must be logged in" });
-
-    const { title, description, ingredients, steps, tags } = req.body;
+    const { title, description, ingredients, steps, tagsId } = req.body;
 
     const recipe = new Recipe({
-      userId: req.user.id,
+      userId: req.session.user._id,
       title,
       description,
       ingredients,
       steps,
-      tags,
+      tagsId,
     });
 
     await recipe.save();
@@ -66,21 +63,21 @@ const updateRecipe = async (req, res) => {
         .json({ message: "Not allowed to update this recipe" });
     }
 
-    const { title, description, ingredients, steps, tags } = req.body;
+    const { title, description, ingredients, steps, tagsId } = req.body;
 
     const updateData = {};
     if (title) updateData.title = title;
     if (description) updateData.description = description;
     if (ingredients) updateData.ingredients = ingredients;
     if (steps) updateData.steps = steps;
-    if (tags) updateData.tags = tags;
+    if (tagsId) updateData.tagsId = tagsId;
 
     const updatedRecipe = await Recipe.findByIdAndUpdate(
       req.params.id,
       updateData,
       { new: true },
     );
-    res.json(updatedRecipe);
+    res.status(200).json(updatedRecipe);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
